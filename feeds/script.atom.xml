@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Another Dimensiong</title><link href="http://xubin0523.github.io/" rel="alternate"></link><link href="http://xubin0523.github.io/feeds/script.atom.xml" rel="self"></link><id>http://xubin0523.github.io/</id><updated>2014-10-18T10:30:57+08:00</updated><entry><title>Shell Basics</title><link href="http://xubin0523.github.io/shell-basics.html" rel="alternate"></link><updated>2014-10-18T10:30:57+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-10-18:shell-basics.html</id><summary type="html">&lt;h3 id="shell"&gt;Shell 相关&lt;/h3&gt;
+&lt;p&gt;shell的语法真的和一般的语言不太一样，而且同一个功能有许多不同的语法，有的时候都被混淆了，这边记录一下日常要用到的一些命令。以后还是学点python吧。&lt;/p&gt;
+&lt;h3 id="_1"&gt;特殊变量&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;$# &lt;br /&gt;
+提供到shell脚本或函数的参数总数。&lt;/li&gt;
+&lt;li&gt;\$*, $@&lt;br /&gt;
+一次表示所有命令行参数，这两个参数可以用来把命令行参数传递给脚本或函数所执行的程序&lt;/li&gt;
+&lt;li&gt;$*&lt;br /&gt;
+ 将所有命令行参数当作单个字符串 &lt;/li&gt;
+&lt;li&gt;$@&lt;br /&gt;
+ 将所有命令行参数当作单独字符串&lt;/li&gt;
+&lt;li&gt;$?&lt;br /&gt;
+  前一个命令的退出状态&lt;/li&gt;
+&lt;li&gt;$$
+  shell进程进程号&lt;/li&gt;
+&lt;li&gt;$0&lt;br /&gt;
+  shell程序的名字&lt;/li&gt;
+&lt;li&gt;$! &lt;br /&gt;
+  最近一个后台命令的进程编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_2"&gt;单引号、双引号、反引号的区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;单引号中的内容就是一个字符串，特殊符号都回归本来面貌，没有特殊意义只是一个字符。&lt;/li&gt;
+&lt;li&gt;双引号中的内容也是一个字符串，但是特殊符号还有特殊作用，比如$1代表第一个参数。&lt;/li&gt;
+&lt;li&gt;反引号括起来的字符串被shell解释为命令行，在执行时，shell首先执行该命令行，并以它的标准输出结果取代整个反引号（包括两个反引号）部分。shell中还可以用\$(...)结构，$(...)格式受到POSIX标准支持，也利于嵌套。 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_3"&gt;函数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;讲函数，首先要明白shell的变量作用域范围，是类似与C的，即&lt;strong&gt;函数的调用必须在定义之后&lt;/strong&gt;。 &lt;/li&gt;
+&lt;li&gt;shell函数传参数，比较特别，没有括号，用空格分割&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;p1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;abc dd&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;p2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;e&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$p1&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;$p2&lt;/span&gt; &lt;span class="c1"&gt;//$p1必须用双引号，因为用空格分割&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;函数的返回包括两部分，一个是函数执行的状态，一个是函数的返回值。&lt;br /&gt;
+函数在shell中就是一个command，使用return，是返回一个命令的退出状态[0-255].&lt;br /&gt;
+用echo可以使shell获取函数中的标准输出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="nx"&gt;cat&lt;/span&gt; &lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="err"&gt;/bin/bash&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;using&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;dbl&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="nx"&gt;read&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Enter a value: &amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;
+&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$value&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="cp"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="nx"&gt;dbl&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;The new value is $result&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="nx"&gt;Enter&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;
+&lt;span class="nx"&gt;The&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;
+&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="nx"&gt;Enter&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;
+&lt;span class="nx"&gt;The&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;2000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="_4"&gt;变量&lt;/h3&gt;
+&lt;p&gt;shell中的变量有全局变量和局部变量，默认声明的变量都是全局变量，在函数中可以使用局部变量&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="n"&gt;addarray&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;local&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;local&lt;/span&gt; &lt;span class="n"&gt;newarray&lt;/span&gt;
+&lt;span class="n"&gt;newarray&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$@&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;newarray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;done&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;myarray&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The original array is: ${myarray[*]}&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;addarray&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The result is $result&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;test11&lt;/span&gt;
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;original&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="arithmetic-expression"&gt;Arithmetic Expression&lt;/h3&gt;
+&lt;p&gt;"(( ))"&lt;a href="http://mywiki.wooledge.org/ArithmeticExpression#preview"&gt;算术表达式&lt;/a&gt;，可以用作其他语言的加减&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;还可以用作比较，好记又实用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt; 
+     &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+ &lt;span class="n"&gt;done&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="new-test"&gt;New Test&lt;/h3&gt;
+&lt;p&gt;"[[ ]]"是新的test命令，可以支持类似于其他语言比较，还增加了正则功能。可以看下与Old 
+Test命令的&lt;a href="http://mywiki.wooledge.org/BashFAQ/031"&gt;区别&lt;/a&gt;  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//是否包含某个字符串&lt;/span&gt;
+&lt;span class="k"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;My&lt;/span&gt; &lt;span class="k"&gt;string&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="k"&gt;string&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;My&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="n"&gt;then&lt;/span&gt;
+  &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;It&amp;#39;s there!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+&lt;span class="c1"&gt;//比较&lt;/span&gt;
+&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt; &lt;span class="p"&gt;]];&lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="_5"&gt;日常命令&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;date 命令&lt;ul&gt;
+&lt;li&gt;获取今天时期：`date +%Y%m%d` 或 `date +%F` 或 $(date +%y%m%d) &lt;/li&gt;
+&lt;li&gt;获取昨天时期：`date -d yesterday +%Y%m%d` &lt;/li&gt;
+&lt;li&gt;获取前天日期：`date -d -2day +%Y%m%d` &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Shell"></category></entry></feed>

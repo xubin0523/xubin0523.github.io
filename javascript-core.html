@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Mark" />
+        <meta name="copyright" content="Mark" />
+
+<meta name="keywords" content="JavaScript, Basics, JavaScript, " />
+        <title>JavaScript Core  · Another Dimensiong
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://xubin0523.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://xubin0523.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://xubin0523.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://xubin0523.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://xubin0523.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://xubin0523.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://xubin0523.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://xubin0523.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://xubin0523.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://xubin0523.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - Full Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/IDE.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - IDE Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/JAVA.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - JAVA Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/JavaScript.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - JavaScript Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/Script.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - Script Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-53683327-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://xubin0523.github.io/"><span class=site-name>Another Dimensiong</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://xubin0523.github.io">Home</a></li>
+                            <li ><a href="http://xubin0523.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://xubin0523.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://xubin0523.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://xubin0523.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://xubin0523.github.io/javascript-core.html"> JavaScript Core  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <h2 id="what-is-javascript">what is javaScript?</h2>
+<p>JavaScript 是一种动态，弱类型，解释型语言，它还有一个原名叫ECMAScript。我还把它看成函数式编程语言，考虑到业界对函数式语言没有一个明确的定义，但是单从它可以把函数当成参数来看，它就是函数式的。 </p>
+<ul>
+<li>动态：程序在运行时可以改变对象的结构。  </li>
+<li>弱类型：语法中没有对类型的强制检测，类型之间可以相互转换。</li>
+<li>解释型：相对于编译型语言存在的，源代码不是直接翻译成机器语言，而是先翻译成中间代码，再由解释器对中间代码进行解释运行。</li>
+<li>函数式：我理解的是y = f(x) , x could be a function</li>
+</ul>
+<p>当然，最重要的它还是面向对象的编程语言。</p>
+<blockquote>
+<p>ECMAScript is an object-oriented programming language supporting delegating inheritance based on prototypes.</p>
+</blockquote>
+<h2 id="introduction">Introduction</h2>
+<p>通过最近几天的学习，对于只接触过C，C++，Java 的我来说，javaScript真的是一门高级语言，awesome！以后我还要学习go，lisp，应该也是别有一番风味。
+我试着去理解三个问题：<br />
+1. 对象，函数，闭包是什么，他们之间有何联系。<br />
+2. 它是怎么面向对象的，我们怎么使用它进行面向对象编程。<br />
+3. 函数式编程的优缺点，对比OOP。  </p>
+<p><strong><em>下面的讨论都是基于ECMAScript 5</em></strong></p>
+<h2 id="object">Object</h2>
+<p>下面是对对象的非常准确的定义。</p>
+<blockquote>
+<p>Object is an unordered collection of key-value pairs.</p>
+</blockquote>
+<p>这边就有一点疑惑了，函数是不是可以看成对象，如果它是，那它是键值对？如果不是，那它与对象的关系是什么？——hold<br />
+Example:  </p>
+<div class="highlight"><pre><span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// object &quot;x&quot; with three properties: a, b, c</span>
+  <span class="nl">a:</span> <span class="mi">10</span><span class="p">,</span> <span class="c1">// primitive value</span>
+  <span class="nl">b:</span> <span class="p">{</span><span class="n">z</span><span class="o">:</span> <span class="mi">100</span><span class="p">},</span> <span class="c1">// object &quot;b&quot; with property z</span>
+  <span class="nl">c:</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span> <span class="c1">// function (method)</span>
+    <span class="n">alert</span><span class="p">(</span><span class="err">&#39;</span><span class="n">method</span> <span class="n">x</span><span class="p">.</span><span class="n">c</span><span class="err">&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">alert</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">a</span><span class="p">);</span> <span class="c1">// 10</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">b</span><span class="p">);</span> <span class="c1">// [object Object]</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span> <span class="c1">// 100</span>
+<span class="n">x</span><span class="p">.</span><span class="n">c</span><span class="p">();</span> <span class="c1">// &#39;method x.c&#39;</span>
+</pre></div>
+
+
+<p>可以看到，key代表了对象的属性，value可以是任何类型。</p>
+<h3 id="property-attributes">Property attributes</h3>
+<p>对象中的熟悉有下面几个性质：<br />
+1. writable: 属性值可否更改<br />
+2. enumerable: 属性值能否在循环中遍历<br />
+3. configurable: 属性值能否被delete<br />
+4. Internal：属性是否是内置的，一般编程用不到，这个在javaScript语言的实现层。  <br />
+Example:  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">value</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nx">writable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> 
+  <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> 
+  <span class="nx">configurable</span><span class="o">:</span> <span class="kc">true</span> 
+<span class="p">});</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">value</span><span class="o">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="nx">writable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> 
+  <span class="nx">enumerable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> 
+  <span class="nx">configurable</span><span class="o">:</span> <span class="kc">false</span> 
+<span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 10</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 100</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span> <span class="c1">// 20</span>
+
+<span class="p">(</span><span class="kd">function</span> <span class="nx">enumV</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">property</span> <span class="k">in</span> <span class="nx">foo</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">property</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">})();</span><span class="c1">// y</span>
+
+<span class="k">delete</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+<span class="k">delete</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span><span class="c1">//Object {y: 20}</span>
+</pre></div>
+
+
+<h3 id="constructor">Constructor</h3>
+<p>对象的创建是由构造函数来完成的。当O = new F( ); 执行时，在JS内部对象的创建遵循以下算法：  </p>
+<div class="highlight"><pre><span class="n">F</span><span class="p">.[[</span><span class="n">Construct</span><span class="p">]](</span><span class="n">initialParameters</span><span class="p">)</span><span class="o">:</span>
+
+<span class="n">O</span> <span class="o">=</span> <span class="n">new</span> <span class="n">NativeObject</span><span class="p">();</span>
+
+<span class="c1">// property [[Class]] is set to &quot;Object&quot;, i.e. simple object</span>
+<span class="n">O</span><span class="p">.[[</span><span class="n">Class</span><span class="p">]]</span> <span class="o">=</span> <span class="s">&quot;Object&quot;</span>
+
+<span class="c1">// get the object on which</span>
+<span class="c1">// at the moment references F.prototype</span>
+<span class="n">var</span> <span class="n">__objectPrototype</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">prototype</span><span class="p">;</span>
+
+<span class="c1">// if __objectPrototype is an object, then:</span>
+<span class="n">O</span><span class="p">.[[</span><span class="n">Prototype</span><span class="p">]]</span> <span class="o">=</span> <span class="n">__objectPrototype</span>
+<span class="c1">// else:</span>
+<span class="n">O</span><span class="p">.[[</span><span class="n">Prototype</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Object</span><span class="p">.</span><span class="n">prototype</span><span class="p">;</span>
+<span class="c1">// where O.[[Prototype]] is the prototype of the object</span>
+
+<span class="c1">// initialization of the newly created object</span>
+<span class="c1">// applying the F.[[Call]]; pass:</span>
+<span class="c1">// as this value – newly created object - O,</span>
+<span class="c1">// arguments are the same as initialParameters for F</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">F</span><span class="p">.[[</span><span class="n">Call</span><span class="p">]](</span><span class="n">initialParameters</span><span class="p">);</span> <span class="n">this</span> <span class="o">===</span> <span class="n">O</span><span class="p">;</span>
+<span class="c1">// where R is the returned value of the [[Call]]</span>
+<span class="c1">// in JS view it looks like:</span>
+<span class="c1">// R = F.apply(O, initialParameters);</span>
+
+<span class="c1">// if R is an object</span>
+<span class="k">return</span> <span class="n">R</span>
+<span class="c1">// else</span>
+<span class="k">return</span> <span class="n">O</span>
+</pre></div>
+
+
+<p>函数的创建遵循以下算法：  </p>
+<div class="highlight"><pre><span class="nx">F</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NativeObject</span><span class="p">();</span>
+
+<span class="c1">// property </span><span class="cp">[</span><span class="err">[</span><span class="nb">Class</span><span class="cp">]</span><span class="c1">] is &quot;Function&quot;</span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nb">Class</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Function&quot;</span>
+
+<span class="c1">// a prototype of a function object</span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nx">Prototype</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span>
+
+<span class="c1">// reference to function itself</span>
+<span class="c1">// </span><span class="cp">[</span><span class="err">[</span><span class="nb">Call</span><span class="cp">]</span><span class="c1">] is activated by call expression F()</span>
+<span class="c1">// and creates a new execution context</span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nb">Call</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">reference</span> <span class="nx">to</span> <span class="kd">function</span><span class="o">&gt;</span>
+
+<span class="c1">// built in general constructor of objects</span>
+<span class="c1">// </span><span class="cp">[</span><span class="err">[</span><span class="nx">Construct</span><span class="cp">]</span><span class="c1">] is activated via &quot;new&quot; keyword</span>
+<span class="c1">// and it is the one who allocates memory for new</span>
+<span class="c1">// objects; then it calls F.</span><span class="cp">[</span><span class="err">[</span><span class="nb">Call</span><span class="cp">]</span><span class="c1">]</span>
+<span class="c1">// to initialize created objects passing as</span>
+<span class="c1">// &quot;this&quot; value newly created object </span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nx">Construct</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="nx">internalConstructor</span>
+
+<span class="c1">// scope chain of the current context</span>
+<span class="c1">// i.e. context which creates function F</span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nx">Scope</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="nx">activeContext</span><span class="p">.</span><span class="nx">Scope</span>
+<span class="c1">// if this functions is created </span>
+<span class="c1">// via new Function(...), then</span>
+<span class="nx">F</span><span class="p">.</span><span class="cp">[</span><span class="err">[</span><span class="nx">Scope</span><span class="cp">]</span><span class="p">]</span> <span class="o">=</span> <span class="nx">globalContext</span><span class="p">.</span><span class="nx">Scope</span>
+
+<span class="c1">// number of formal parameters</span>
+<span class="nx">F</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="nx">countParameters</span>
+
+<span class="c1">// a prototype of created by F objects</span>
+<span class="nx">__objectPrototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">__objectPrototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">F</span> <span class="c1">// {DontEnum}, is not enumerable in loops</span>
+<span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">__objectPrototype</span>
+
+<span class="k">return</span> <span class="nx">F</span>
+</pre></div>
+
+
+<p>从内置的创建算法来看，对象的prototype是对应的构造函数在创建时产生的prototype。函数与对象的第一个关系我们找到了，那就是（1）函数可以作为对象的构造函数，对象在创建时会去调用构造函数（2）并且对象的prototype在初始化时用的是其函数的prototype，修改函数的prototype，不会对已经通过函数创建的对象的prototype产生影响。(3) 通过new 关键字创造的对象首先是构造函数返回的对象，其次才是原生创建的对象。要正确理解第2，3点，看下面这个例子：</p>
+<div class="highlight"><pre><span class="n">function</span> <span class="nf">A</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}</span>
+<span class="n">A</span><span class="p">.</span><span class="n">prototype</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">new</span> <span class="n">A</span><span class="p">();</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">);</span> <span class="c1">// 10 – by delegation, from the prototype</span>
+
+<span class="c1">// set .prototype property of the</span>
+<span class="c1">// function to new object; why explicitly</span>
+<span class="c1">// to define the .constructor property,</span>
+<span class="c1">// will be described below</span>
+<span class="n">A</span><span class="p">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nl">constructor:</span> <span class="n">A</span><span class="p">,</span>
+  <span class="nl">y:</span> <span class="mi">100</span>
+<span class="p">};</span>
+
+<span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">new</span> <span class="n">A</span><span class="p">();</span>
+<span class="c1">// object &quot;b&quot; has new prototype</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">);</span> <span class="c1">// undefined</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span> <span class="c1">// 100 – by delegation, from the prototype</span>
+
+<span class="c1">// however, prototype of the &quot;a&quot; object</span>
+<span class="c1">// is still old </span>
+<span class="n">alert</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">);</span> <span class="c1">// 10 - by delegation, from the prototype</span>
+
+<span class="n">function</span> <span class="nf">B</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">this</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">new</span> <span class="n">Array</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// if &quot;B&quot; constructor had not return</span>
+<span class="c1">// (or was return this), then this-object</span>
+<span class="c1">// would be used, but in this case – an array</span>
+<span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">new</span> <span class="n">B</span><span class="p">();</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">);</span> <span class="c1">// undefined</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="n">prototype</span><span class="p">.</span><span class="n">toString</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="n">b</span><span class="p">));</span> <span class="c1">// [object Array]</span>
+</pre></div>
+
+
+<h3 id="reading-and-writing-properties">Reading and writing properties</h3>
+<p>读写属性值，使用的是js内置函数[[get]]、[[put]]，可以看到它们在js中的实现,一切都了然了：<br />
+Get  </p>
+<div class="highlight"><pre><span class="n">O</span><span class="p">.[[</span><span class="n">Get</span><span class="p">]](</span><span class="n">P</span><span class="p">)</span><span class="o">:</span>
+
+<span class="c1">// if there is own</span>
+<span class="c1">// property, return it</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">O</span><span class="p">.</span><span class="n">hasOwnProperty</span><span class="p">(</span><span class="n">P</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">O</span><span class="p">.</span><span class="n">P</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// else, analyzing prototype</span>
+<span class="n">var</span> <span class="n">__proto</span> <span class="o">=</span> <span class="n">O</span><span class="p">.[[</span><span class="n">Prototype</span><span class="p">]];</span>
+
+<span class="c1">// if there is no prototype (it is,</span>
+<span class="c1">// possible e.g. in the last link of the</span>
+<span class="c1">// chain - Object.prototype.[[Prototype]],</span>
+<span class="c1">// which is equal to null),</span>
+<span class="c1">// then return undefined;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">__proto</span> <span class="o">===</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">undefined</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// else, call [[Get]] method recursively -</span>
+<span class="c1">// now for prototype; i.e. go through prototype</span>
+<span class="c1">// chain: try to find property in the</span>
+<span class="c1">// prototype, after that – in a prototype of</span>
+<span class="c1">// the prototype and so on, until</span>
+<span class="c1">// [[Prorotype]] will be equal to null</span>
+<span class="k">return</span> <span class="n">__proto</span><span class="p">.[[</span><span class="n">Get</span><span class="p">]](</span><span class="n">P</span><span class="p">)</span>
+</pre></div>
+
+
+<p>可以看到Get的实现其实是一个递归，它一直会向上递归去寻找prototype对象中是否含有这个属性，直到找到或者到最顶端结束。这是一个prototype chain 。<br />
+Put  </p>
+<div class="highlight"><pre><span class="n">O</span><span class="p">.[[</span><span class="n">Put</span><span class="p">]](</span><span class="n">P</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span><span class="o">:</span>
+
+<span class="c1">// if we can&#39;t write to</span>
+<span class="c1">// this property then exit</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">O</span><span class="p">.[[</span><span class="n">CanPut</span><span class="p">]](</span><span class="n">P</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// if object doesn&#39;t have such own,</span>
+<span class="c1">// property, then create it; all attributes</span>
+<span class="c1">// are empty (set to false)</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">O</span><span class="p">.</span><span class="n">hasOwnProperty</span><span class="p">(</span><span class="n">P</span><span class="p">))</span> <span class="p">{</span>
+  <span class="n">createNewProperty</span><span class="p">(</span><span class="n">O</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">attributes</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nl">ReadOnly:</span> <span class="nb">false</span><span class="p">,</span>
+    <span class="nl">DontEnum:</span> <span class="nb">false</span><span class="p">,</span>
+    <span class="nl">DontDelete:</span> <span class="nb">false</span><span class="p">,</span>
+    <span class="nl">Internal:</span> <span class="nb">false</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// set the value;</span>
+<span class="c1">// if property existed, its</span>
+<span class="c1">// attributes are not changed</span>
+<span class="n">O</span><span class="p">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">V</span>
+
+<span class="k">return</span><span class="p">;</span>
+</pre></div>
+
+
+<p>可以自己定义get/set 访问器：  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">chenhao</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span> <span class="nx">chenhao</span><span class="p">,</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="p">{</span>
+                      <span class="nx">get</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="nx">age</span><span class="o">+</span><span class="mi">1</span><span class="p">;},</span>
+                      <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span><span class="nx">age</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;},</span>
+                      <span class="nx">enumerable</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                      <span class="nx">configurable</span> <span class="o">:</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+<span class="p">);</span>
+<span class="nx">chenhao</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">//调用set</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">chenhao</span><span class="cp">[</span><span class="s1">&#39;age&#39;</span><span class="cp">]</span><span class="p">);</span> <span class="c1">//调用get 输出101（get中+1了）;</span>
+</pre></div>
+
+
+<h2 id="execution-context">Execution context</h2>
+<p>Execution context(EC)是一个抽象概念，可以把EC看成函数的执行环境，可以把它抽象成一个栈，最底层是global context，每执行一次函数都会往栈里push一个当前的context。这里的函数是包括所有的函数，构造函数，递归等。<br />
+那执行环境应该包含哪些东西呢？很多框架也有Context那么一个概念，感觉很类似。JS里面的Execution Context 包含三部分：Variable object、Scope chain、thisValue。  </p>
+<h3 id="variable-object">Variable object</h3>
+<p>variable object(vo) 就是在当前context中定义的函数，变量。它是一个抽象概念，你可以把它看成执行过程中能引用的资源。  </p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">test</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="kd">function</span> <span class="nx">d</span><span class="p">()</span> <span class="p">{}</span>
+  <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">_e</span><span class="p">()</span> <span class="p">{};</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="nx">x</span><span class="p">()</span> <span class="p">{});</span>
+<span class="p">}</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span> <span class="c1">// call</span>
+</pre></div>
+
+
+<p>上面的例子，通过调用test，进入一个function context，这时vo的值可以表示为:  </p>
+<div class="highlight"><pre><span class="n">VO</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nl">a:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nl">b:</span> <span class="n">undefined</span><span class="p">,</span>
+  <span class="nl">c:</span> <span class="n">undefined</span><span class="p">,</span>
+  <span class="nl">d:</span> <span class="o">&lt;</span><span class="n">reference</span> <span class="n">to</span> <span class="n">FunctionDeclaration</span> <span class="s">&quot;d&quot;</span><span class="o">&gt;</span>
+  <span class="nl">e:</span> <span class="n">undefined</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>可以得出vo的原则：   </p>
+<ul>
+<li>在进入function context时，vo产生</li>
+<li>函数参数有值，没有传入的参数为undefined</li>
+<li>context中的变量初始值为undefined</li>
+<li>context中声明的函数，有对应的引用</li>
+<li>vo不包含函数表达式</li>
+</ul>
+<p>再看下面这个例子，就可以更好的理解了。  </p>
+<div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// function</span>
+
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 10</span>
+
+<span class="nx">x</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">x</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 20</span>
+</pre></div>
+
+
+<h4 id="_1">没有全局变量的存在</h4>
+<p>对于变量的理解，很多js中都把var声明的作为局部变量，没有var声明的作为全局变量，这其实是错误的。请看以下代码：  </p>
+<div class="highlight"><pre><span class="n">alert</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// undefined</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="c1">// &quot;b&quot; is not defined</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</pre></div>
+
+
+<p>说明在vo创建时，只生成了a，并没有b，b是在执行过程中生成的。  </p>
+<div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span><span class="c1">//a is not defined</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="p">}</span>
+<span class="nx">c</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+<span class="nx">foo</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">)</span><span class="c1">//undefined</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span><span class="p">)</span><span class="c1">//20</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">c</span><span class="p">)</span><span class="c1">//30</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">d</span><span class="p">)</span><span class="c1">//40</span>
+<span class="k">delete</span> <span class="nx">b</span><span class="p">;</span>
+<span class="k">delete</span> <span class="nx">c</span><span class="p">;</span>
+<span class="k">delete</span> <span class="nx">d</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span><span class="p">)</span><span class="c1">//undefined</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">d</span><span class="p">)</span><span class="c1">//40</span>
+</pre></div>
+
+
+<p>说明b、c是window的一个属性，而js中的变量是configurable属性默认为false的。  </p>
+<h3 id="scope-chain">Scope chain</h3>
+<p>scope chain 也是一个抽象概念，但是非常容易理解。既然它是一个chain，那先明确scope的概念</p>
+<blockquote>
+<p>[[Scope]] is a hierarchical chain of all parent variable objects, which are above the current function context; the chain is saved to the function at its creation</p>
+</blockquote>
+<p>首先，js中的变量是function scope的。  </p>
+<div class="highlight"><pre><span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">true</span><span class="p">){</span><span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;}</span>
+<span class="n">alert</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="c1">//20;</span>
+</pre></div>
+
+
+<p>这是vo的性质，Scope chain 是所有上层context的vo、ao的集合。
+还有非常重要的一点：scope 在函数创建的时候就决定的，并不是动态决定。可以参考函数创建的算法。  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+  <span class="nx">foo</span><span class="p">();</span> <span class="c1">// 10, y is not defined, undefined</span>
+<span class="p">})();</span>
+
+<span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+</pre></div>
+
+
+<p>总结下来就是：<br />
+1. Scope chain 是所有vo、ao的集合。<br />
+2. vo、ao在一开始函数定义时决定<br />
+3. Scope chain 就是用来查找变量的。  </p>
+<blockquote>
+<p>Scope chain is related with an execution context a chain of variable objects which is used for variables lookup at identifier resolution.</p>
+</blockquote>
+<h4 id="closure">Closure</h4>
+<p>理解了scope chain，基本上就理解闭包了。</p>
+<blockquote>
+<p>A closure is a combination of a code block and data of a context in which this code block is created.</p>
+</blockquote>
+<p>先看例子：  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">incr</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">decr</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+<span class="kd">var</span> <span class="nx">k</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+<span class="nx">incr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="kd">var</span> <span class="nx">b</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span><span class="nx">k</span><span class="o">++</span><span class="p">;</span><span class="nx">alert</span><span class="p">(</span><span class="nx">k</span><span class="p">);}</span>
+<span class="nx">decr</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">k</span><span class="o">--</span><span class="p">;</span><span class="nx">alert</span><span class="p">(</span><span class="nx">k</span><span class="p">);</span><span class="nx">alert</span><span class="p">(</span><span class="nx">b</span><span class="p">);}</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+<span class="nx">incr</span><span class="p">();</span><span class="c1">//101</span>
+<span class="nx">decr</span><span class="p">();</span><span class="c1">//100, b is not defined</span>
+</pre></div>
+
+
+<p>对于传统的利用栈来存储变量的语言来说，一旦函数结束返回，变量就出栈，内存也释放了。但是，对于要把函数当作参数传递的函数式语言，这是不科学的。因此有个free变量的概念。  </p>
+<blockquote>
+<p>A free variable is a variable which is used by a function, but is neither a parameter, nor a local variable of the function.</p>
+</blockquote>
+<p>这些free 变量将常驻内存，调用闭包都能访问到，这才是闭包的精髓。那么问题来了，这些变量将一直存在，会不会造成内存泄漏呢？
+答案是会的。但这要求我们有良好的编码习惯了，把函数都写入函数表达式中，不要定义全局变量等等。  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">data</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">k</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="nx">data</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 3, but not 0</span>
+<span class="nx">data</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 3, but not 1</span>
+<span class="nx">data</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 3, but not 2</span>
+</pre></div>
+
+
+<p>通过传递k值  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">data</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="nx">_helper</span><span class="p">(</span><span class="nx">k</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">k</span><span class="o">+=</span><span class="mi">6</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">k</span><span class="p">);</span>
+    <span class="p">};</span>
+  <span class="p">})(</span><span class="nx">k</span><span class="p">);</span> <span class="c1">// pass &quot;k&quot; value</span>
+<span class="p">}</span>
+
+<span class="c1">// now it is correct</span>
+<span class="nx">data</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 0</span>
+<span class="nx">data</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 1</span>
+<span class="nx">data</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="p">();</span> <span class="c1">// 2</span>
+</pre></div>
+
+
+<h4 id="this-value">this value</h4>
+<p>this 对象也是属于EC的一个属性，它就是函数调用者本身，在函数调用时产生，并且reference无法修改，当无函数调用者时，this指向global。
+下面这个例子，可以看到new一个对象和之间调用函数的区别：new 一个对象时，对象会调用构造函数，这时的this是对象本身。直接函数的调用，this则指向global。  </p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bf</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">)}</span>
+<span class="nx">bf</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">;</span> <span class="c1">// undefined</span>
+<span class="nx">foo</span><span class="p">();</span> <span class="c1">// 123</span>
+</pre></div>
+
+
+<h2 id="oop">OOP</h2>
+<p>面向对象有三大概念：封装、继承、多态。是对是错，我们暂且不管，之后会讨论。
+现在先看看Js是怎么实现这些原理的，因为如果知道js是怎么实现的，那就可以把在java，c++中学习到的面向对象编程方法用到js上来，那么就能用js开发复杂业务啦。</p>
+<h3 id="inheritance-override">Inheritance &amp; Override</h3>
+<p>在一开始js的定义中，已经说到js是通过对象中的内置属性prototype用代理的方式来实现继承的。也就是说，只要理解了prototype的原理以及[[get]]方法的原理，那继承的原理也就了然啦。
+可以使用Object.create:  </p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">z</span><span class="o">:</span> <span class="kd">function</span><span class="p">()(</span><span class="k">return</span> <span class="mi">100</span><span class="p">;)};</span>
+<span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="p">{</span><span class="nx">y</span><span class="o">:</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="mi">20</span><span class="p">},</span> <span class="nx">f</span><span class="o">:</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span><span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="mi">1</span><span class="p">}}});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">bar</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">bar</span><span class="p">.</span><span class="nx">f</span><span class="p">(</span><span class="nx">bar</span><span class="p">.</span><span class="nx">x</span><span class="p">),</span><span class="nx">bar</span><span class="p">.</span><span class="nx">z</span><span class="p">());</span> <span class="c1">// 10, 20, 11, 100</span>
+<span class="nx">bar</span><span class="p">.</span><span class="nx">z</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="mi">200</span><span class="p">;}</span>
+<span class="nx">bar</span><span class="p">.</span><span class="nx">z</span><span class="p">();</span><span class="c1">//200</span>
+</pre></div>
+
+
+<p>它的内部实现原理是：  </p>
+<div class="highlight"><pre><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span> <span class="o">||</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">properties</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">F</span><span class="p">()</span> <span class="p">{}</span>
+  <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="k">in</span> <span class="nx">properties</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">child</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span> <span class="o">=</span> <span class="nx">properties</span><span class="cp">[</span><span class="nx">k</span><span class="cp">]</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">child</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h3 id="mixins">Mixins</h3>
+<div class="highlight"><pre><span class="c1">// helper for augmentation</span>
+<span class="n">Object</span><span class="p">.</span><span class="n">extend</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">property</span> <span class="n">in</span> <span class="n">source</span><span class="p">)</span> 
+  <span class="k">if</span> <span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">hasOwnProperty</span><span class="p">(</span><span class="k">property</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">destination</span><span class="p">[</span><span class="k">property</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="k">property</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">destination</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">var</span> <span class="no">X</span> <span class="o">=</span> <span class="p">{</span><span class="nl">a:</span> <span class="mh">10</span><span class="p">,</span> <span class="nl">b:</span> <span class="mh">20</span><span class="p">};</span>
+<span class="k">var</span> <span class="no">Y</span> <span class="o">=</span> <span class="p">{</span><span class="nl">c:</span> <span class="mh">30</span><span class="p">,</span> <span class="nl">d:</span> <span class="mh">40</span><span class="p">};</span>
+
+<span class="n">Object</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="no">X</span><span class="p">,</span> <span class="no">Y</span><span class="p">);</span> <span class="c1">// mix Y into X</span>
+<span class="n">alert</span><span class="p">([</span><span class="no">X</span><span class="p">.</span><span class="n">a</span><span class="p">,</span> <span class="no">X</span><span class="p">.</span><span class="n">b</span><span class="p">,</span> <span class="no">X</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="no">X</span><span class="p">.</span><span class="n">d</span><span class="p">]);</span> <span class="mh">10</span><span class="p">,</span> <span class="mh">20</span><span class="p">,</span> <span class="mh">30</span><span class="p">,</span> <span class="mh">40</span>
+</pre></div>
+
+
+<h3 id="composition">Composition</h3>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">_delegate</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;_delegate.foo&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">agregate</span> <span class="o">=</span> <span class="p">{</span>
+
+  <span class="nx">delegate</span><span class="o">:</span> <span class="nx">_delegate</span><span class="p">,</span>
+
+  <span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">delegate</span><span class="p">.</span><span class="nx">foo</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="nx">agregate</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// delegate.foo</span>
+
+<span class="nx">agregate</span><span class="p">.</span><span class="nx">delegate</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;foo from new delegate&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">agregate</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// foo from new delegate</span>
+</pre></div>
+
+
+<p>面向对象的本质到底是什么？OOP的先驱者Alan Kay所说的<a href="http://lists.squeakfoundation.org/pipermail/squeak-dev/1998-October/017019.html">出处</a>，系统的设计真正要在乎的是如何交互，关注的是行为。关注消息通讯的结构，性能，灵活性是我以后写代码时要考虑的。模块之间可否独立？RESTful？</p>
+<blockquote>
+<p>Smalltalk is not only NOT its syntax or the class library, it is not even about classes. I'm sorry that I long ago coined the term "objects" for this topic because it gets many people to focus on the lesser idea. The big idea is "messaging".</p>
+</blockquote>
+<p>我被下面的代码惊艳到了。  </p>
+<div class="highlight"><pre><span class="c1">//Javascript</span>
+<span class="c1">//集合类Set的构造函数</span>
+<span class="k">function</span> <span class="n">Set</span><span class="p">()</span> <span class="p">{</span> 
+    <span class="k">var</span> <span class="n">_elements</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">;</span>
+    <span class="c1">//In方法：判断元素e是否在集合中 </span>
+    <span class="k">this</span><span class="p">.</span><span class="n">In</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">for</span> <span class="p">(</span><span class="k">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_elements</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="n">_elements</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">e</span><span class="p">)</span> <span class="k">return</span> <span class="n">true</span><span class="p">;</span> 
+        <span class="p">}</span> 
+        <span class="k">return</span> <span class="n">false</span><span class="p">;</span> 
+    <span class="p">};</span> 
+<span class="p">}</span>
+
+<span class="c1">//Join方法：对两个集合求交集</span>
+<span class="n">Set</span><span class="p">.</span><span class="n">prototype</span><span class="p">.</span><span class="n">Join</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">var</span> <span class="n">s1</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span> 
+    <span class="k">var</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Set</span><span class="p">();</span> 
+    <span class="n">s</span><span class="p">.</span><span class="n">In</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s1</span><span class="p">.</span><span class="n">In</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">s2</span><span class="p">.</span><span class="n">In</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="p">}</span> 
+    <span class="k">return</span> <span class="n">s</span><span class="p">;</span> 
+<span class="p">};</span>
+
+<span class="c1">//Union方法：对两个集合求并集</span>
+<span class="n">Set</span><span class="p">.</span><span class="n">prototype</span><span class="p">.</span><span class="n">Union</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">var</span> <span class="n">s1</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span> 
+    <span class="k">var</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Set</span><span class="p">();</span> 
+    <span class="n">s</span><span class="p">.</span><span class="n">In</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s1</span><span class="p">.</span><span class="n">In</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">||</span> <span class="n">s2</span><span class="p">.</span><span class="n">In</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="p">}</span> 
+    <span class="k">return</span> <span class="n">s</span><span class="p">;</span> 
+<span class="p">};</span>
+
+<span class="k">var</span> <span class="n">s1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Set</span><span class="p">(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">);</span> 
+<span class="k">var</span> <span class="n">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Set</span><span class="p">(</span><span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">,</span> <span class="mh">6</span><span class="p">);</span> 
+<span class="k">var</span> <span class="n">s3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Set</span><span class="p">(</span><span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">,</span> <span class="mh">6</span><span class="p">,</span> <span class="mh">7</span><span class="p">);</span> 
+<span class="k">assert</span><span class="p">(</span><span class="n">false</span> <span class="o">==</span> <span class="n">s1</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="n">s2</span><span class="p">).</span><span class="n">Join</span><span class="p">(</span><span class="n">s3</span><span class="p">).</span><span class="n">In</span><span class="p">(</span><span class="mh">2</span><span class="p">));</span> 
+<span class="k">assert</span><span class="p">(</span><span class="n">true</span> <span class="o">==</span> <span class="n">s1</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="n">s2</span><span class="p">).</span><span class="n">Uion</span><span class="p">(</span><span class="n">s3</span><span class="p">).</span><span class="n">In</span><span class="p">(</span><span class="mh">7</span><span class="p">));</span>
+</pre></div>
+
+
+<h2 id="functional-programing">Functional Programing</h2>
+<p>函数式编程，现在的工作使用的场景不多，当然可以把它的思想用在平时的java编程中，或者使用java8的新特性。<br />
+首先，我觉得是把要实现的逻辑，拆分成一个个函数逻辑，其实这在OO里面也是尽量把逻辑原子化，单单从形式上看不出来。主要的区别在于它讲究无状态性，正如皓哥说的：<br />
+1）函数之间没有共享的变量。<br />
+2）函数间通过参数和返回值来传递数据。<br />
+3）在函数里没有临时变量。<br />
+这个了解不多，以后学python使用到的时候再好好总结下。</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>因为一个小需求，需要迁移页面，所以顺便学习了一下JS，收获还是挺多的，只是暂时实践的机会不多，行文比较仓促，查找到的资料很好，希望以后用的到。</p>
+<ul>
+<li>JS core<ul>
+<li>执行栈，栈中每个EX包括this，vo，scope chain。其中this和vo在函数调用时产生，scope chain是在函数创建时决定的vo引用变量链</li>
+<li>查找变量，先通过scope chain查找，然后在通过prototype查找</li>
+</ul>
+</li>
+<li>OOP的本质——对象的消息模型</li>
+<li>怎样学习一门语言<ul>
+<li>找一个好的老师，起码一定要找好的资料</li>
+<li>从语言的底层实现，设计着手可以看到更本质的东西</li>
+<li>作为OOP语言，它是怎么表示对象的，它是怎么管理内存的 </li>
+<li>再学一下它的特性</li>
+</ul>
+</li>
+</ul>
+<h2 id="basics">Basics</h2>
+<ul>
+<li>DOM（Document Object Model）, 就是把整个HTML页面映射为一个多层节点结构。</li>
+<li>script 元素<ul>
+<li>defer 延迟加载，脚本会被延迟到整个页面都解析完毕后在运行，只适用于外部脚本文件。</li>
+<li>async 异步加载，但一定会在页面的Load事件前执行，只适用于外部脚本文件。</li>
+</ul>
+</li>
+<li>null undefined <ul>
+<li>null 代表一个空对象</li>
+<li>undefined 检查有没有声明过</li>
+</ul>
+</li>
+<li>window  document<ul>
+<li>window指窗体。document指页面。document是window的一个子对象</li>
+<li>用户不能改变document.location(因为这是当前显示文档的位置)。但是,可以改变window.location (用其它文档取代当前文档)window.location本身也是一个对象,而document.location不是对象</li>
+<li>window.onload() 是标准的DOM事件，会在页面的所有内容加载后触发（包括图片）。</li>
+<li>$(document).ready() 是jQuery事件，会在document加载完成后触发。</li>
+<li>类型转换是通过valueOf方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="reference">Reference</h3>
+<ol>
+<li>http://coolshell.cn/articles/6731.html</li>
+<li>http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html</li>
+<li>JavaScript Closures for Dummies</li>
+<li>JavaScript 高级程序设计</li>
+<li>Secrets of the JavaScript Ninja</li>
+<li>http://dmitrysoshnikov.com/</li>
+<li>http://stackoverflow.com/questions/111102/how-do-javascript-closures-work</li>
+<li>JavaScript: The Good Parts</li>
+<li>JavaScript设计模式</li>
+<li>High Performance JavaScript (Build Faster Web Application Interfaces)</li>
+<li>http://www.cnblogs.com/weidagang2046/archive/2011/08/14/object-messaging-model.html</li>
+<li>http://coolshell.cn/articles/10822.html#comment-1111518</li>
+</ol>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://xubin0523.github.io/javascript-core.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'maybexubin';
+        var disqus_identifier = 'http://xubin0523.github.io/javascript-core.html';
+    var disqus_url = 'http://xubin0523.github.io/javascript-core.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://xubin0523.github.io/shell-basics.html" title="Previous: Shell Basics">Shell Basics</a></li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2014-11-09T17:00:31">Nov 9, 2014</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#JavaScript-ref">JavaScript</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#Basics-ref">Basics
+                    <span>1</span>
+</a></li>
+                <li><a href="/tags.html#JavaScript-ref">JavaScript
+                    <span>1</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'maybexubin';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

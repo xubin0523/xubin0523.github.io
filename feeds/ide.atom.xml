@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Another Dimensiong</title><link href="http://xubin0523.github.io/" rel="alternate"></link><link href="http://xubin0523.github.io/feeds/ide.atom.xml" rel="self"></link><id>http://xubin0523.github.io/</id><updated>2014-10-04T12:16:32+08:00</updated><entry><title>Intellij Idea Shortcuts</title><link href="http://xubin0523.github.io/intellij-idea-shortcuts.html" rel="alternate"></link><updated>2014-10-04T12:16:32+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-10-04:intellij-idea-shortcuts.html</id><summary type="html">&lt;h3 id="_1"&gt;查找&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日常查看代码的需求都能符合 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Command + Shift + A   打开action，这里可以查看所有的快捷键&lt;/li&gt;
+&lt;li&gt;Command + O 打开class&lt;/li&gt;
+&lt;li&gt;Command + Shift + O 打开file&lt;/li&gt;
+&lt;li&gt;Command + F 本文件搜索&lt;/li&gt;
+&lt;li&gt;Command + Shift + F 全局搜索&lt;/li&gt;
+&lt;li&gt;Command + [ 上一个光标停留位置&lt;/li&gt;
+&lt;li&gt;Command + ] 下一个光标停留位置&lt;/li&gt;
+&lt;li&gt;Command + F7  Find Usages in Files&lt;/li&gt;
+&lt;li&gt;Option  + F7  Find Usages&lt;/li&gt;
+&lt;li&gt;Command + B   go to Declaration &lt;/li&gt;
+&lt;li&gt;Command + Option + B go to implements&lt;/li&gt;
+&lt;li&gt;Ctrl + H 类结构&lt;/li&gt;
+&lt;li&gt;Ctrl + J 查看javadoc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_2"&gt;编辑&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日常写代码都能符合，跟很多编辑器的快捷键类似，比如shell&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Ctrl + A 行首&lt;/li&gt;
+&lt;li&gt;Ctrl + E，行尾&lt;/li&gt;
+&lt;li&gt;Ctrl + N  next line&lt;/li&gt;
+&lt;li&gt;Ctrl + P  previews line&lt;/li&gt;
+&lt;li&gt;Ctrl + F，forward,after char&lt;/li&gt;
+&lt;li&gt;Ctrl + B，before char&lt;/li&gt;
+&lt;li&gt;Ctrl + K 删除光标到行尾&lt;/li&gt;
+&lt;li&gt;Command + Shift + Delete 上一次编辑的位置&lt;/li&gt;
+&lt;li&gt;Command + N 可以创建构造函数、get、set方法&lt;/li&gt;
+&lt;li&gt;Command + shift + option + u 画类图&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Intellij"></category></entry></feed>

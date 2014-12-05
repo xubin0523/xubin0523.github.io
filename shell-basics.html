@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Mark" />
+        <meta name="copyright" content="Mark" />
+
+<meta name="keywords" content="Shell, Script, " />
+        <title>Shell Basics  · Another Dimensiong
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://xubin0523.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://xubin0523.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="http://xubin0523.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="http://xubin0523.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="http://xubin0523.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="http://xubin0523.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="http://xubin0523.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="http://xubin0523.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="http://xubin0523.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="http://xubin0523.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - Full Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/IDE.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - IDE Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/JAVA.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - JAVA Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/JavaScript.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - JavaScript Category Atom Feed" />
+        <link href="http://xubin0523.github.io/feeds/Script.atom.xml" type="application/atom+xml" rel="alternate" title="Another Dimensiong - Script Category Atom Feed" />
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-53683327-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://xubin0523.github.io/"><span class=site-name>Another Dimensiong</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://xubin0523.github.io">Home</a></li>
+                            <li ><a href="http://xubin0523.github.io/categories.html">Categories</a></li>
+                            <li ><a href="http://xubin0523.github.io/tags.html">Tags</a></li>
+                            <li ><a href="http://xubin0523.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://xubin0523.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="http://xubin0523.github.io/shell-basics.html"> Shell Basics  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <h3 id="shell">Shell 相关</h3>
+<p>shell的语法真的和一般的语言不太一样，而且同一个功能有许多不同的语法，有的时候都被混淆了，这边记录一下日常要用到的一些命令。以后还是学点python吧。</p>
+<h3 id="_1">特殊变量</h3>
+<ul>
+<li>$# <br />
+提供到shell脚本或函数的参数总数。</li>
+<li>\$*, $@<br />
+一次表示所有命令行参数，这两个参数可以用来把命令行参数传递给脚本或函数所执行的程序</li>
+<li>$*<br />
+ 将所有命令行参数当作单个字符串 </li>
+<li>$@<br />
+ 将所有命令行参数当作单独字符串</li>
+<li>$?<br />
+  前一个命令的退出状态</li>
+<li>$$
+  shell进程进程号</li>
+<li>$0<br />
+  shell程序的名字</li>
+<li>$! <br />
+  最近一个后台命令的进程编号</li>
+</ul>
+<h3 id="_2">单引号、双引号、反引号的区别</h3>
+<ul>
+<li>单引号中的内容就是一个字符串，特殊符号都回归本来面貌，没有特殊意义只是一个字符。</li>
+<li>双引号中的内容也是一个字符串，但是特殊符号还有特殊作用，比如$1代表第一个参数。</li>
+<li>反引号括起来的字符串被shell解释为命令行，在执行时，shell首先执行该命令行，并以它的标准输出结果取代整个反引号（包括两个反引号）部分。shell中还可以用\$(...)结构，$(...)格式受到POSIX标准支持，也利于嵌套。 </li>
+</ul>
+<h3 id="_3">函数</h3>
+<ul>
+<li>讲函数，首先要明白shell的变量作用域范围，是类似与C的，即<strong>函数的调用必须在定义之后</strong>。 </li>
+<li>shell函数传参数，比较特别，没有括号，用空格分割</li>
+</ul>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+    <span class="nx">echo</span> <span class="nx">$1</span><span class="p">;</span>
+    <span class="nx">echo</span> <span class="nx">$2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">p1</span><span class="o">=</span><span class="s2">&quot;abc dd&quot;</span>
+<span class="nx">p2</span><span class="o">=</span><span class="s2">&quot;e&quot;</span>
+<span class="nx">foo</span> <span class="s2">&quot;$p1&quot;</span> <span class="nx">$p2</span> <span class="c1">//$p1必须用双引号，因为用空格分割</span>
+</pre></div>
+
+
+<ul>
+<li>函数的返回包括两部分，一个是函数执行的状态，一个是函数的返回值。<br />
+函数在shell中就是一个command，使用return，是返回一个命令的退出状态[0-255].<br />
+用echo可以使shell获取函数中的标准输出</li>
+</ul>
+<div class="highlight"><pre><span class="nx">$</span> <span class="nx">cat</span> <span class="nx">test5b</span>
+<span class="err">#</span><span class="o">!</span><span class="err">/bin/bash</span>
+<span class="err">#</span> <span class="nx">using</span> <span class="nx">the</span> <span class="nx">echo</span> <span class="nx">to</span> <span class="k">return</span> <span class="nx">a</span> <span class="nx">value</span>
+<span class="kd">function</span> <span class="nx">dbl</span> <span class="p">{</span>
+<span class="nx">read</span> <span class="o">-</span><span class="nx">p</span> <span class="s2">&quot;Enter a value: &quot;</span> <span class="nx">value</span>
+<span class="nx">echo</span> <span class="nx">$</span><span class="cp">[</span> <span class="nv">$value</span> <span class="o">*</span> <span class="mi">2</span> <span class="cp">]</span>
+<span class="p">}</span>
+<span class="nx">result</span><span class="o">=</span><span class="err">`</span><span class="nx">dbl</span><span class="err">`</span>
+<span class="nx">echo</span> <span class="s2">&quot;The new value is $result&quot;</span>
+<span class="nx">$</span> <span class="p">.</span><span class="o">/</span><span class="nx">test5b</span>
+<span class="nx">Enter</span> <span class="nx">a</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">200</span>
+<span class="nx">The</span> <span class="k">new</span> <span class="nx">value</span> <span class="nx">is</span> <span class="mi">400</span>
+<span class="nx">$</span> <span class="p">.</span><span class="o">/</span><span class="nx">test5b</span>
+<span class="nx">Enter</span> <span class="nx">a</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">1000</span>
+<span class="nx">The</span> <span class="k">new</span> <span class="nx">value</span> <span class="nx">is</span> <span class="mi">2000</span>
+</pre></div>
+
+
+<h3 id="_4">变量</h3>
+<p>shell中的变量有全局变量和局部变量，默认声明的变量都是全局变量，在函数中可以使用局部变量</p>
+<div class="highlight"><pre><span class="n">function</span> <span class="n">addarray</span> <span class="p">{</span>
+<span class="n">local</span> <span class="n">sum</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">local</span> <span class="n">newarray</span>
+<span class="n">newarray</span><span class="o">=</span><span class="p">(</span><span class="err">`</span><span class="n">echo</span> <span class="s">&quot;$@&quot;</span><span class="err">`</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="err">$</span><span class="p">{</span><span class="n">newarray</span><span class="p">[</span><span class="o">*</span><span class="p">]}</span>
+<span class="k">do</span>
+<span class="n">sum</span><span class="o">=</span><span class="err">$</span><span class="p">[</span> <span class="err">$</span><span class="n">sum</span> <span class="o">+</span> <span class="err">$</span><span class="n">value</span> <span class="p">]</span>
+<span class="n">done</span>
+<span class="n">echo</span> <span class="err">$</span><span class="n">sum</span>
+<span class="p">}</span>
+<span class="n">myarray</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">echo</span> <span class="s">&quot;The original array is: ${myarray[*]}&quot;</span>
+<span class="n">arg1</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="err">$</span><span class="p">{</span><span class="n">myarray</span><span class="p">[</span><span class="o">*</span><span class="p">]}</span><span class="err">`</span>
+<span class="n">result</span><span class="o">=</span><span class="err">`</span><span class="n">addarray</span> <span class="err">$</span><span class="n">arg1</span><span class="err">`</span>
+<span class="n">echo</span> <span class="s">&quot;The result is $result&quot;</span>
+<span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">test11</span>
+<span class="n">The</span> <span class="n">original</span> <span class="n">array</span> <span class="n">is</span><span class="o">:</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
+<span class="n">The</span> <span class="n">result</span> <span class="n">is</span> <span class="mi">15</span>
+</pre></div>
+
+
+<h3 id="arithmetic-expression">Arithmetic Expression</h3>
+<p>"(( ))"<a href="http://mywiki.wooledge.org/ArithmeticExpression#preview">算术表达式</a>，可以用作其他语言的加减</p>
+<div class="highlight"><pre><span class="n">n</span><span class="o">=</span><span class="err">$</span><span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+
+<p>还可以用作比较，好记又实用</p>
+<div class="highlight"><pre> <span class="k">for</span> <span class="p">((</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">));</span><span class="k">do</span> 
+     <span class="n">echo</span> <span class="err">$</span><span class="n">i</span><span class="p">;</span> 
+ <span class="n">done</span> 
+</pre></div>
+
+
+<h3 id="new-test">New Test</h3>
+<p>"[[ ]]"是新的test命令，可以支持类似于其他语言比较，还增加了正则功能。可以看下与Old 
+Test命令的<a href="http://mywiki.wooledge.org/BashFAQ/031">区别</a>  </p>
+<div class="highlight"><pre><span class="c1">//是否包含某个字符串</span>
+<span class="k">string</span><span class="o">=</span><span class="p">&#39;</span><span class="n">My</span> <span class="k">string</span><span class="p">&#39;;</span>
+<span class="k">if</span> <span class="p">[[</span> <span class="err">$</span><span class="k">string</span> <span class="o">==</span> <span class="o">*</span><span class="n">My</span><span class="o">*</span> <span class="p">]]</span>
+<span class="n">then</span>
+  <span class="n">echo</span> <span class="s">&quot;It&#39;s there!&quot;</span><span class="p">;</span>
+<span class="n">fi</span>
+<span class="c1">//比较</span>
+<span class="n">num</span><span class="o">=</span><span class="mh">5</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">[[</span> <span class="err">$</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mh">0</span> <span class="p">]];</span><span class="k">do</span>
+    <span class="n">num</span><span class="o">=</span><span class="err">$</span><span class="p">((</span><span class="err">$</span><span class="n">num</span> <span class="o">-</span> <span class="mh">1</span><span class="p">));</span>
+    <span class="n">echo</span> <span class="err">$</span><span class="n">num</span><span class="p">;</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<h3 id="_5">日常命令</h3>
+<ul>
+<li>date 命令<ul>
+<li>获取今天时期：`date +%Y%m%d` 或 `date +%F` 或 $(date +%y%m%d) </li>
+<li>获取昨天时期：`date -d yesterday +%Y%m%d` </li>
+<li>获取前天日期：`date -d -2day +%Y%m%d` </li>
+</ul>
+</li>
+</ul>
+<section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://xubin0523.github.io/shell-basics.html#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'maybexubin';
+        var disqus_identifier = 'http://xubin0523.github.io/shell-basics.html';
+    var disqus_url = 'http://xubin0523.github.io/shell-basics.html';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="http://xubin0523.github.io/bits.html" title="Previous: Bits">Bits</a></li>
+ 
+                <li class="next_article"><a href="http://xubin0523.github.io/javascript-core.html" title="Next: JavaScript Core">JavaScript Core</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2014-10-18T10:30:57">Oct 18, 2014</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#Script-ref">Script</a> 
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article"> 
+                <li><a href="/tags.html#Shell-ref">Shell
+                    <span>1</span>
+</a></li>
+            </ul>
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+<script type="text/javascript">
+    var disqus_shortname = 'maybexubin';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+        <script  language="javascript" type="text/javascript">
+            function uncollapse() {
+                var hash_str = window.location.hash;
+                if (window.location.hash.match(/^#comment-\d+$/))
+                {
+                    var hash_str = '#disqus_thread';
+                }
+                $(hash_str).collapse({
+                    toggle: true
+                    })
+            }
+        </script>
+
+        <script type="text/javascript" language="JavaScript">
+            uncollapse(); 
+        </script>
+    </body>
+</html>

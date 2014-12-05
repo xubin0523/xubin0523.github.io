@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Another Dimensiong</title><link href="http://xubin0523.github.io/" rel="alternate"></link><link href="http://xubin0523.github.io/feeds/mark.atom.xml" rel="self"></link><id>http://xubin0523.github.io/</id><updated>2014-11-09T17:00:31+08:00</updated><entry><title>JavaScript Core</title><link href="http://xubin0523.github.io/javascript-core.html" rel="alternate"></link><updated>2014-11-09T17:00:31+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-11-09:javascript-core.html</id><summary type="html">&lt;h2 id="what-is-javascript"&gt;what is javaScript?&lt;/h2&gt;
+&lt;p&gt;JavaScript 是一种动态，弱类型，解释型语言，它还有一个原名叫ECMAScript。我还把它看成函数式编程语言，考虑到业界对函数式语言没有一个明确的定义，但是单从它可以把函数当成参数来看，它就是函数式的。 &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;动态：程序在运行时可以改变对象的结构。  &lt;/li&gt;
+&lt;li&gt;弱类型：语法中没有对类型的强制检测，类型之间可以相互转换。&lt;/li&gt;
+&lt;li&gt;解释型：相对于编译型语言存在的，源代码不是直接翻译成机器语言，而是先翻译成中间代码，再由解释器对中间代码进行解释运行。&lt;/li&gt;
+&lt;li&gt;函数式：我理解的是y = f(x) , x could be a function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然，最重要的它还是面向对象的编程语言。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ECMAScript is an object-oriented programming language supporting delegating inheritance based on prototypes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;通过最近几天的学习，对于只接触过C，C++，Java 的我来说，javaScript真的是一门高级语言，awesome！以后我还要学习go，lisp，应该也是别有一番风味。
+我试着去理解三个问题：&lt;br /&gt;
+1. 对象，函数，闭包是什么，他们之间有何联系。&lt;br /&gt;
+2. 它是怎么面向对象的，我们怎么使用它进行面向对象编程。&lt;br /&gt;
+3. 函数式编程的优缺点，对比OOP。  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;下面的讨论都是基于ECMAScript 5&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="object"&gt;Object&lt;/h2&gt;
+&lt;p&gt;下面是对对象的非常准确的定义。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Object is an unordered collection of key-value pairs.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这边就有一点疑惑了，函数是不是可以看成对象，如果它是，那它是键值对？如果不是，那它与对象的关系是什么？——hold&lt;br /&gt;
+Example:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// object &amp;quot;x&amp;quot; with three properties: a, b, c&lt;/span&gt;
+  &lt;span class="nl"&gt;a:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c1"&gt;// primitive value&lt;/span&gt;
+  &lt;span class="nl"&gt;b:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="c1"&gt;// object &amp;quot;b&amp;quot; with property z&lt;/span&gt;
+  &lt;span class="nl"&gt;c:&lt;/span&gt; &lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// function (method)&lt;/span&gt;
+    &lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 10&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// [object Object]&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 100&lt;/span&gt;
+&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// &amp;#39;method x.c&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以看到，key代表了对象的属性，value可以是任何类型。&lt;/p&gt;
+&lt;h3 id="property-attributes"&gt;Property attributes&lt;/h3&gt;
+&lt;p&gt;对象中的熟悉有下面几个性质：&lt;br /&gt;
+1. writable: 属性值可否更改&lt;br /&gt;
+2. enumerable: 属性值能否在循环中遍历&lt;br /&gt;
+3. configurable: 属性值能否被delete&lt;br /&gt;
+4. Internal：属性是否是内置的，一般编程用不到，这个在javaScript语言的实现层。  &lt;br /&gt;
+Example:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+
+&lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defineProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;x&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;writable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+  &lt;span class="nx"&gt;enumerable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+  &lt;span class="nx"&gt;configurable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt; 
+&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defineProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;y&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;writable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+  &lt;span class="nx"&gt;enumerable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+  &lt;span class="nx"&gt;configurable&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt; 
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 10&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 100&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 20&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;enumV&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;property&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;})();&lt;/span&gt;&lt;span class="c1"&gt;// y&lt;/span&gt;
+
+&lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//Object {y: 20}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="constructor"&gt;Constructor&lt;/h3&gt;
+&lt;p&gt;对象的创建是由构造函数来完成的。当O = new F( ); 执行时，在JS内部对象的创建遵循以下算法：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Construct&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;initialParameters&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+
+&lt;span class="n"&gt;O&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;NativeObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+&lt;span class="c1"&gt;// property [[Class]] is set to &amp;quot;Object&amp;quot;, i.e. simple object&lt;/span&gt;
+&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Object&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// get the object on which&lt;/span&gt;
+&lt;span class="c1"&gt;// at the moment references F.prototype&lt;/span&gt;
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;__objectPrototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if __objectPrototype is an object, then:&lt;/span&gt;
+&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Prototype&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;__objectPrototype&lt;/span&gt;
+&lt;span class="c1"&gt;// else:&lt;/span&gt;
+&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Prototype&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;// where O.[[Prototype]] is the prototype of the object&lt;/span&gt;
+
+&lt;span class="c1"&gt;// initialization of the newly created object&lt;/span&gt;
+&lt;span class="c1"&gt;// applying the F.[[Call]]; pass:&lt;/span&gt;
+&lt;span class="c1"&gt;// as this value – newly created object - O,&lt;/span&gt;
+&lt;span class="c1"&gt;// arguments are the same as initialParameters for F&lt;/span&gt;
+&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Call&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;initialParameters&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;// where R is the returned value of the [[Call]]&lt;/span&gt;
+&lt;span class="c1"&gt;// in JS view it looks like:&lt;/span&gt;
+&lt;span class="c1"&gt;// R = F.apply(O, initialParameters);&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if R is an object&lt;/span&gt;
+&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;
+&lt;span class="c1"&gt;// else&lt;/span&gt;
+&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;函数的创建遵循以下算法：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;F&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;NativeObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+&lt;span class="c1"&gt;// property &lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;Class&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;] is &amp;quot;Function&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;Class&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Function&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// a prototype of a function object&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Prototype&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Function&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;
+
+&lt;span class="c1"&gt;// reference to function itself&lt;/span&gt;
+&lt;span class="c1"&gt;// &lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;Call&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;] is activated by call expression F()&lt;/span&gt;
+&lt;span class="c1"&gt;// and creates a new execution context&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;Call&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;reference&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// built in general constructor of objects&lt;/span&gt;
+&lt;span class="c1"&gt;// &lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Construct&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;] is activated via &amp;quot;new&amp;quot; keyword&lt;/span&gt;
+&lt;span class="c1"&gt;// and it is the one who allocates memory for new&lt;/span&gt;
+&lt;span class="c1"&gt;// objects; then it calls F.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;Call&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;// to initialize created objects passing as&lt;/span&gt;
+&lt;span class="c1"&gt;// &amp;quot;this&amp;quot; value newly created object &lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Construct&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;internalConstructor&lt;/span&gt;
+
+&lt;span class="c1"&gt;// scope chain of the current context&lt;/span&gt;
+&lt;span class="c1"&gt;// i.e. context which creates function F&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Scope&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;activeContext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Scope&lt;/span&gt;
+&lt;span class="c1"&gt;// if this functions is created &lt;/span&gt;
+&lt;span class="c1"&gt;// via new Function(...), then&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Scope&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;globalContext&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Scope&lt;/span&gt;
+
+&lt;span class="c1"&gt;// number of formal parameters&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;countParameters&lt;/span&gt;
+
+&lt;span class="c1"&gt;// a prototype of created by F objects&lt;/span&gt;
+&lt;span class="nx"&gt;__objectPrototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;__objectPrototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;constructor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;F&lt;/span&gt; &lt;span class="c1"&gt;// {DontEnum}, is not enumerable in loops&lt;/span&gt;
+&lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;__objectPrototype&lt;/span&gt;
+
+&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;F&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;从内置的创建算法来看，对象的prototype是对应的构造函数在创建时产生的prototype。函数与对象的第一个关系我们找到了，那就是（1）函数可以作为对象的构造函数，对象在创建时会去调用构造函数（2）并且对象的prototype在初始化时用的是其函数的prototype，修改函数的prototype，不会对已经通过函数创建的对象的prototype产生影响。(3) 通过new 关键字创造的对象首先是构造函数返回的对象，其次才是原生创建的对象。要正确理解第2，3点，看下面这个例子：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;A&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 10 – by delegation, from the prototype&lt;/span&gt;
+
+&lt;span class="c1"&gt;// set .prototype property of the&lt;/span&gt;
+&lt;span class="c1"&gt;// function to new object; why explicitly&lt;/span&gt;
+&lt;span class="c1"&gt;// to define the .constructor property,&lt;/span&gt;
+&lt;span class="c1"&gt;// will be described below&lt;/span&gt;
+&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nl"&gt;constructor:&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nl"&gt;y:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// object &amp;quot;b&amp;quot; has new prototype&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// undefined&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 100 – by delegation, from the prototype&lt;/span&gt;
+
+&lt;span class="c1"&gt;// however, prototype of the &amp;quot;a&amp;quot; object&lt;/span&gt;
+&lt;span class="c1"&gt;// is still old &lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 10 - by delegation, from the prototype&lt;/span&gt;
+
+&lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;B&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Array&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if &amp;quot;B&amp;quot; constructor had not return&lt;/span&gt;
+&lt;span class="c1"&gt;// (or was return this), then this-object&lt;/span&gt;
+&lt;span class="c1"&gt;// would be used, but in this case – an array&lt;/span&gt;
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// undefined&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;toString&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt; &lt;span class="c1"&gt;// [object Array]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="reading-and-writing-properties"&gt;Reading and writing properties&lt;/h3&gt;
+&lt;p&gt;读写属性值，使用的是js内置函数[[get]]、[[put]]，可以看到它们在js中的实现,一切都了然了：&lt;br /&gt;
+Get  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Get&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if there is own&lt;/span&gt;
+&lt;span class="c1"&gt;// property, return it&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasOwnProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// else, analyzing prototype&lt;/span&gt;
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;__proto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Prototype&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if there is no prototype (it is,&lt;/span&gt;
+&lt;span class="c1"&gt;// possible e.g. in the last link of the&lt;/span&gt;
+&lt;span class="c1"&gt;// chain - Object.prototype.[[Prototype]],&lt;/span&gt;
+&lt;span class="c1"&gt;// which is equal to null),&lt;/span&gt;
+&lt;span class="c1"&gt;// then return undefined;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__proto&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;undefined&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// else, call [[Get]] method recursively -&lt;/span&gt;
+&lt;span class="c1"&gt;// now for prototype; i.e. go through prototype&lt;/span&gt;
+&lt;span class="c1"&gt;// chain: try to find property in the&lt;/span&gt;
+&lt;span class="c1"&gt;// prototype, after that – in a prototype of&lt;/span&gt;
+&lt;span class="c1"&gt;// the prototype and so on, until&lt;/span&gt;
+&lt;span class="c1"&gt;// [[Prorotype]] will be equal to null&lt;/span&gt;
+&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;__proto&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Get&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以看到Get的实现其实是一个递归，它一直会向上递归去寻找prototype对象中是否含有这个属性，直到找到或者到最顶端结束。这是一个prototype chain 。&lt;br /&gt;
+Put  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;Put&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;V&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if we can&amp;#39;t write to&lt;/span&gt;
+&lt;span class="c1"&gt;// this property then exit&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.[[&lt;/span&gt;&lt;span class="n"&gt;CanPut&lt;/span&gt;&lt;span class="p"&gt;]](&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// if object doesn&amp;#39;t have such own,&lt;/span&gt;
+&lt;span class="c1"&gt;// property, then create it; all attributes&lt;/span&gt;
+&lt;span class="c1"&gt;// are empty (set to false)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasOwnProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;createNewProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nl"&gt;ReadOnly:&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nl"&gt;DontEnum:&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nl"&gt;DontDelete:&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nl"&gt;Internal:&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// set the value;&lt;/span&gt;
+&lt;span class="c1"&gt;// if property existed, its&lt;/span&gt;
+&lt;span class="c1"&gt;// attributes are not changed&lt;/span&gt;
+&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;V&lt;/span&gt;
+
+&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以自己定义get/set 访问器：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;chenhao&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+&lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;defineProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="nx"&gt;chenhao&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s1"&gt;&amp;#39;age&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                      &lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;},&lt;/span&gt;
+                      &lt;span class="nx"&gt;set&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;},&lt;/span&gt;
+                      &lt;span class="nx"&gt;enumerable&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                      &lt;span class="nx"&gt;configurable&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+                    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;chenhao&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//调用set&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;chenhao&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;age&amp;#39;&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//调用get 输出101（get中+1了）;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="execution-context"&gt;Execution context&lt;/h2&gt;
+&lt;p&gt;Execution context(EC)是一个抽象概念，可以把EC看成函数的执行环境，可以把它抽象成一个栈，最底层是global context，每执行一次函数都会往栈里push一个当前的context。这里的函数是包括所有的函数，构造函数，递归等。&lt;br /&gt;
+那执行环境应该包含哪些东西呢？很多框架也有Context那么一个概念，感觉很类似。JS里面的Execution Context 包含三部分：Variable object、Scope chain、thisValue。  &lt;/p&gt;
+&lt;h3 id="variable-object"&gt;Variable object&lt;/h3&gt;
+&lt;p&gt;variable object(vo) 就是在当前context中定义的函数，变量。它是一个抽象概念，你可以把它看成执行过程中能引用的资源。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;d&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;_e&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{});&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// call&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面的例子，通过调用test，进入一个function context，这时vo的值可以表示为:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;VO&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nl"&gt;a:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nl"&gt;b:&lt;/span&gt; &lt;span class="n"&gt;undefined&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nl"&gt;c:&lt;/span&gt; &lt;span class="n"&gt;undefined&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nl"&gt;d:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;FunctionDeclaration&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nl"&gt;e:&lt;/span&gt; &lt;span class="n"&gt;undefined&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以得出vo的原则：   &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在进入function context时，vo产生&lt;/li&gt;
+&lt;li&gt;函数参数有值，没有传入的参数为undefined&lt;/li&gt;
+&lt;li&gt;context中的变量初始值为undefined&lt;/li&gt;
+&lt;li&gt;context中声明的函数，有对应的引用&lt;/li&gt;
+&lt;li&gt;vo不包含函数表达式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再看下面这个例子，就可以更好的理解了。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// function&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 10&lt;/span&gt;
+
+&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 20&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4 id="_1"&gt;没有全局变量的存在&lt;/h4&gt;
+&lt;p&gt;对于变量的理解，很多js中都把var声明的作为局部变量，没有var声明的作为全局变量，这其实是错误的。请看以下代码：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// undefined&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// &amp;quot;b&amp;quot; is not defined&lt;/span&gt;
+
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;说明在vo创建时，只生成了a，并没有b，b是在执行过程中生成的。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//a is not defined&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//undefined&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//20&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//30&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//40&lt;/span&gt;
+&lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//undefined&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;//40&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;说明b、c是window的一个属性，而js中的变量是configurable属性默认为false的。  &lt;/p&gt;
+&lt;h3 id="scope-chain"&gt;Scope chain&lt;/h3&gt;
+&lt;p&gt;scope chain 也是一个抽象概念，但是非常容易理解。既然它是一个chain，那先明确scope的概念&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[[Scope]] is a hierarchical chain of all parent variable objects, which are above the current function context; the chain is saved to the function at its creation&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;首先，js中的变量是function scope的。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//20;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这是vo的性质，Scope chain 是所有上层context的vo、ao的集合。
+还有非常重要的一点：scope 在函数创建的时候就决定的，并不是动态决定。可以参考函数创建的算法。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;z&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 10, y is not defined, undefined&lt;/span&gt;
+&lt;span class="p"&gt;})();&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;总结下来就是：&lt;br /&gt;
+1. Scope chain 是所有vo、ao的集合。&lt;br /&gt;
+2. vo、ao在一开始函数定义时决定&lt;br /&gt;
+3. Scope chain 就是用来查找变量的。  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Scope chain is related with an execution context a chain of variable objects which is used for variables lookup at identifier resolution.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="closure"&gt;Closure&lt;/h4&gt;
+&lt;p&gt;理解了scope chain，基本上就理解闭包了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A closure is a combination of a code block and data of a context in which this code block is created.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;先看例子：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;decr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;incr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;);}&lt;/span&gt;
+&lt;span class="nx"&gt;decr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;);}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="c1"&gt;//101&lt;/span&gt;
+&lt;span class="nx"&gt;decr&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="c1"&gt;//100, b is not defined&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;对于传统的利用栈来存储变量的语言来说，一旦函数结束返回，变量就出栈，内存也释放了。但是，对于要把函数当作参数传递的函数式语言，这是不科学的。因此有个free变量的概念。  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A free variable is a variable which is used by a function, but is neither a parameter, nor a local variable of the function.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这些free 变量将常驻内存，调用闭包都能访问到，这才是闭包的精髓。那么问题来了，这些变量将一直存在，会不会造成内存泄漏呢？
+答案是会的。但这要求我们有良好的编码习惯了，把函数都写入函数表达式中，不要定义全局变量等等。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 3, but not 0&lt;/span&gt;
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 3, but not 1&lt;/span&gt;
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 3, but not 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过传递k值  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;_helper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;};&lt;/span&gt;
+  &lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// pass &amp;quot;k&amp;quot; value&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// now it is correct&lt;/span&gt;
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 0&lt;/span&gt;
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 1&lt;/span&gt;
+&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4 id="this-value"&gt;this value&lt;/h4&gt;
+&lt;p&gt;this 对象也是属于EC的一个属性，它就是函数调用者本身，在函数调用时产生，并且reference无法修改，当无函数调用者时，this指向global。
+下面这个例子，可以看到new一个对象和之间调用函数的区别：new 一个对象时，对象会调用构造函数，这时的this是对象本身。直接函数的调用，this则指向global。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;123&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;bf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;span class="nx"&gt;bf&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// undefined&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// 123&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="oop"&gt;OOP&lt;/h2&gt;
+&lt;p&gt;面向对象有三大概念：封装、继承、多态。是对是错，我们暂且不管，之后会讨论。
+现在先看看Js是怎么实现这些原理的，因为如果知道js是怎么实现的，那就可以把在java，c++中学习到的面向对象编程方法用到js上来，那么就能用js开发复杂业务啦。&lt;/p&gt;
+&lt;h3 id="inheritance-override"&gt;Inheritance &amp;amp; Override&lt;/h3&gt;
+&lt;p&gt;在一开始js的定义中，已经说到js是通过对象中的内置属性prototype用代理的方式来实现继承的。也就是说，只要理解了prototype的原理以及[[get]]方法的原理，那继承的原理也就了然啦。
+可以使用Object.create:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;z&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()(&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;)};&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;bar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="nx"&gt;f&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}}});&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;z&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt; &lt;span class="c1"&gt;// 10, 20, 11, 100&lt;/span&gt;
+&lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;z&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
+&lt;span class="nx"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;z&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="c1"&gt;//200&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;它的内部实现原理是：  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;create&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+&lt;span class="nb"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;create&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+  &lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;child&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;F&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;k&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;child&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;properties&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;k&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;child&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="mixins"&gt;Mixins&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// helper for augmentation&lt;/span&gt;
+&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;destination&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;property&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasOwnProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;property&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;destination&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;property&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;property&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;destination&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="no"&gt;X&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;a:&lt;/span&gt; &lt;span class="mh"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;b:&lt;/span&gt; &lt;span class="mh"&gt;20&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="no"&gt;Y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;c:&lt;/span&gt; &lt;span class="mh"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;d:&lt;/span&gt; &lt;span class="mh"&gt;40&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// mix Y into X&lt;/span&gt;
+&lt;span class="n"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="no"&gt;X&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;X&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;X&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;X&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt; &lt;span class="mh"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;40&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="composition"&gt;Composition&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;_delegate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_delegate.foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;agregate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+  &lt;span class="nx"&gt;delegate&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;_delegate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+
+  &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="nx"&gt;agregate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// delegate.foo&lt;/span&gt;
+
+&lt;span class="nx"&gt;agregate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;delegate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;foo from new delegate&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="nx"&gt;agregate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// foo from new delegate&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;面向对象的本质到底是什么？OOP的先驱者Alan Kay所说的&lt;a href="http://lists.squeakfoundation.org/pipermail/squeak-dev/1998-October/017019.html"&gt;出处&lt;/a&gt;，系统的设计真正要在乎的是如何交互，关注的是行为。关注消息通讯的结构，性能，灵活性是我以后写代码时要考虑的。模块之间可否独立？RESTful？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Smalltalk is not only NOT its syntax or the class library, it is not even about classes. I'm sorry that I long ago coined the term "objects" for this topic because it gets many people to focus on the lesser idea. The big idea is "messaging".&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我被下面的代码惊艳到了。  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//Javascript&lt;/span&gt;
+&lt;span class="c1"&gt;//集合类Set的构造函数&lt;/span&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+    &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;_elements&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;//In方法：判断元素e是否在集合中 &lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;_elements&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+        &lt;span class="p"&gt;}&lt;/span&gt; 
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+    &lt;span class="p"&gt;};&lt;/span&gt; 
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;//Join方法：对两个集合求交集&lt;/span&gt;
+&lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Join&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+    &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+    &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; 
+    &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; 
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="c1"&gt;//Union方法：对两个集合求并集&lt;/span&gt;
+&lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Union&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+    &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+    &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; 
+    &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; 
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; 
+&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;6&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; 
+&lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;s3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; 
+&lt;span class="k"&gt;assert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;false&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;Join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s3&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt; 
+&lt;span class="k"&gt;assert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;true&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;Uion&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s3&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;In&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="functional-programing"&gt;Functional Programing&lt;/h2&gt;
+&lt;p&gt;函数式编程，现在的工作使用的场景不多，当然可以把它的思想用在平时的java编程中，或者使用java8的新特性。&lt;br /&gt;
+首先，我觉得是把要实现的逻辑，拆分成一个个函数逻辑，其实这在OO里面也是尽量把逻辑原子化，单单从形式上看不出来。主要的区别在于它讲究无状态性，正如皓哥说的：&lt;br /&gt;
+1）函数之间没有共享的变量。&lt;br /&gt;
+2）函数间通过参数和返回值来传递数据。&lt;br /&gt;
+3）在函数里没有临时变量。&lt;br /&gt;
+这个了解不多，以后学python使用到的时候再好好总结下。&lt;/p&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;因为一个小需求，需要迁移页面，所以顺便学习了一下JS，收获还是挺多的，只是暂时实践的机会不多，行文比较仓促，查找到的资料很好，希望以后用的到。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JS core&lt;ul&gt;
+&lt;li&gt;执行栈，栈中每个EX包括this，vo，scope chain。其中this和vo在函数调用时产生，scope chain是在函数创建时决定的vo引用变量链&lt;/li&gt;
+&lt;li&gt;查找变量，先通过scope chain查找，然后在通过prototype查找&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;OOP的本质——对象的消息模型&lt;/li&gt;
+&lt;li&gt;怎样学习一门语言&lt;ul&gt;
+&lt;li&gt;找一个好的老师，起码一定要找好的资料&lt;/li&gt;
+&lt;li&gt;从语言的底层实现，设计着手可以看到更本质的东西&lt;/li&gt;
+&lt;li&gt;作为OOP语言，它是怎么表示对象的，它是怎么管理内存的 &lt;/li&gt;
+&lt;li&gt;再学一下它的特性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="basics"&gt;Basics&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;DOM（Document Object Model）, 就是把整个HTML页面映射为一个多层节点结构。&lt;/li&gt;
+&lt;li&gt;script 元素&lt;ul&gt;
+&lt;li&gt;defer 延迟加载，脚本会被延迟到整个页面都解析完毕后在运行，只适用于外部脚本文件。&lt;/li&gt;
+&lt;li&gt;async 异步加载，但一定会在页面的Load事件前执行，只适用于外部脚本文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;null undefined &lt;ul&gt;
+&lt;li&gt;null 代表一个空对象&lt;/li&gt;
+&lt;li&gt;undefined 检查有没有声明过&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;window  document&lt;ul&gt;
+&lt;li&gt;window指窗体。document指页面。document是window的一个子对象&lt;/li&gt;
+&lt;li&gt;用户不能改变document.location(因为这是当前显示文档的位置)。但是,可以改变window.location (用其它文档取代当前文档)window.location本身也是一个对象,而document.location不是对象&lt;/li&gt;
+&lt;li&gt;window.onload() 是标准的DOM事件，会在页面的所有内容加载后触发（包括图片）。&lt;/li&gt;
+&lt;li&gt;$(document).ready() 是jQuery事件，会在document加载完成后触发。&lt;/li&gt;
+&lt;li&gt;类型转换是通过valueOf方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="reference"&gt;Reference&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;http://coolshell.cn/articles/6731.html&lt;/li&gt;
+&lt;li&gt;http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html&lt;/li&gt;
+&lt;li&gt;JavaScript Closures for Dummies&lt;/li&gt;
+&lt;li&gt;JavaScript 高级程序设计&lt;/li&gt;
+&lt;li&gt;Secrets of the JavaScript Ninja&lt;/li&gt;
+&lt;li&gt;http://dmitrysoshnikov.com/&lt;/li&gt;
+&lt;li&gt;http://stackoverflow.com/questions/111102/how-do-javascript-closures-work&lt;/li&gt;
+&lt;li&gt;JavaScript: The Good Parts&lt;/li&gt;
+&lt;li&gt;JavaScript设计模式&lt;/li&gt;
+&lt;li&gt;High Performance JavaScript (Build Faster Web Application Interfaces)&lt;/li&gt;
+&lt;li&gt;http://www.cnblogs.com/weidagang2046/archive/2011/08/14/object-messaging-model.html&lt;/li&gt;
+&lt;li&gt;http://coolshell.cn/articles/10822.html#comment-1111518&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="JavaScript"></category><category term="Basics"></category></entry><entry><title>Shell Basics</title><link href="http://xubin0523.github.io/shell-basics.html" rel="alternate"></link><updated>2014-10-18T10:30:57+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-10-18:shell-basics.html</id><summary type="html">&lt;h3 id="shell"&gt;Shell 相关&lt;/h3&gt;
+&lt;p&gt;shell的语法真的和一般的语言不太一样，而且同一个功能有许多不同的语法，有的时候都被混淆了，这边记录一下日常要用到的一些命令。以后还是学点python吧。&lt;/p&gt;
+&lt;h3 id="_1"&gt;特殊变量&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;$# &lt;br /&gt;
+提供到shell脚本或函数的参数总数。&lt;/li&gt;
+&lt;li&gt;\$*, $@&lt;br /&gt;
+一次表示所有命令行参数，这两个参数可以用来把命令行参数传递给脚本或函数所执行的程序&lt;/li&gt;
+&lt;li&gt;$*&lt;br /&gt;
+ 将所有命令行参数当作单个字符串 &lt;/li&gt;
+&lt;li&gt;$@&lt;br /&gt;
+ 将所有命令行参数当作单独字符串&lt;/li&gt;
+&lt;li&gt;$?&lt;br /&gt;
+  前一个命令的退出状态&lt;/li&gt;
+&lt;li&gt;$$
+  shell进程进程号&lt;/li&gt;
+&lt;li&gt;$0&lt;br /&gt;
+  shell程序的名字&lt;/li&gt;
+&lt;li&gt;$! &lt;br /&gt;
+  最近一个后台命令的进程编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_2"&gt;单引号、双引号、反引号的区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;单引号中的内容就是一个字符串，特殊符号都回归本来面貌，没有特殊意义只是一个字符。&lt;/li&gt;
+&lt;li&gt;双引号中的内容也是一个字符串，但是特殊符号还有特殊作用，比如$1代表第一个参数。&lt;/li&gt;
+&lt;li&gt;反引号括起来的字符串被shell解释为命令行，在执行时，shell首先执行该命令行，并以它的标准输出结果取代整个反引号（包括两个反引号）部分。shell中还可以用\$(...)结构，$(...)格式受到POSIX标准支持，也利于嵌套。 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_3"&gt;函数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;讲函数，首先要明白shell的变量作用域范围，是类似与C的，即&lt;strong&gt;函数的调用必须在定义之后&lt;/strong&gt;。 &lt;/li&gt;
+&lt;li&gt;shell函数传参数，比较特别，没有括号，用空格分割&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;p1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;abc dd&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;p2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;e&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;foo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$p1&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;$p2&lt;/span&gt; &lt;span class="c1"&gt;//$p1必须用双引号，因为用空格分割&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;函数的返回包括两部分，一个是函数执行的状态，一个是函数的返回值。&lt;br /&gt;
+函数在shell中就是一个command，使用return，是返回一个命令的退出状态[0-255].&lt;br /&gt;
+用echo可以使shell获取函数中的标准输出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="nx"&gt;cat&lt;/span&gt; &lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="err"&gt;/bin/bash&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;using&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;dbl&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="nx"&gt;read&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Enter a value: &amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;
+&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$value&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="cp"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="nx"&gt;dbl&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;The new value is $result&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="nx"&gt;Enter&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;
+&lt;span class="nx"&gt;The&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;
+&lt;span class="nx"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;test5b&lt;/span&gt;
+&lt;span class="nx"&gt;Enter&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;
+&lt;span class="nx"&gt;The&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;2000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="_4"&gt;变量&lt;/h3&gt;
+&lt;p&gt;shell中的变量有全局变量和局部变量，默认声明的变量都是全局变量，在函数中可以使用局部变量&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="n"&gt;addarray&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;local&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;local&lt;/span&gt; &lt;span class="n"&gt;newarray&lt;/span&gt;
+&lt;span class="n"&gt;newarray&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;$@&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;newarray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;done&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;myarray&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The original array is: ${myarray[*]}&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;addarray&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;
+&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;The result is $result&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;test11&lt;/span&gt;
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;original&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="arithmetic-expression"&gt;Arithmetic Expression&lt;/h3&gt;
+&lt;p&gt;"(( ))"&lt;a href="http://mywiki.wooledge.org/ArithmeticExpression#preview"&gt;算术表达式&lt;/a&gt;，可以用作其他语言的加减&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;还可以用作比较，好记又实用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt; 
+     &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+ &lt;span class="n"&gt;done&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="new-test"&gt;New Test&lt;/h3&gt;
+&lt;p&gt;"[[ ]]"是新的test命令，可以支持类似于其他语言比较，还增加了正则功能。可以看下与Old 
+Test命令的&lt;a href="http://mywiki.wooledge.org/BashFAQ/031"&gt;区别&lt;/a&gt;  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//是否包含某个字符串&lt;/span&gt;
+&lt;span class="k"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;My&lt;/span&gt; &lt;span class="k"&gt;string&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="k"&gt;string&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;My&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="n"&gt;then&lt;/span&gt;
+  &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;It&amp;#39;s there!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+&lt;span class="c1"&gt;//比较&lt;/span&gt;
+&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt; &lt;span class="p"&gt;]];&lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="_5"&gt;日常命令&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;date 命令&lt;ul&gt;
+&lt;li&gt;获取今天时期：`date +%Y%m%d` 或 `date +%F` 或 $(date +%y%m%d) &lt;/li&gt;
+&lt;li&gt;获取昨天时期：`date -d yesterday +%Y%m%d` &lt;/li&gt;
+&lt;li&gt;获取前天日期：`date -d -2day +%Y%m%d` &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Shell"></category></entry><entry><title>Bits</title><link href="http://xubin0523.github.io/bits.html" rel="alternate"></link><updated>2014-10-08T23:05:35+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-10-08:bits.html</id><summary type="html">&lt;h2 id="_1"&gt;二进制与位操作&lt;/h2&gt;
+&lt;p&gt;位操作有&amp;amp;，|，~，^，&amp;lt;&amp;lt;，&amp;gt;&amp;gt;，&amp;gt;&amp;gt;&amp;gt;。位操作应用于二进制，把二进制的原理结合到实际的场景中，再通过美妙的位操作有时候可以产生很多巧妙优雅的方法。同时，数的二进制表示是运用位操作的基础，比如&lt;a href="http://zh.wikipedia.org/wiki/%E4%BA%8C%E8%A3%9C%E6%95%B8"&gt;补码&lt;/a&gt;。然后，总结下几个遇到过的吧。&lt;/p&gt;
+&lt;h3 id="jdk-integer-implements"&gt;JDK Integer Implements&lt;/h3&gt;
+&lt;p&gt;java的Integer类有很多位操作的用法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;lowestOneBit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="c1"&gt;//2的幂次&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这是灵活的运用了补码取反加1的原理。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;highestOneBit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;  &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;  &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面的过程是这样的，假设按8bit表示一个数i&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;i&lt;/span&gt;             &lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;12345678&lt;/span&gt;
+&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;12345678&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;01234567&lt;/span&gt;
+&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;12345678&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;01234567&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;00123456&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;00012345&lt;/span&gt;
+&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt; &lt;span class="o"&gt;==&amp;gt;&lt;/span&gt;
+&lt;span class="mi"&gt;12345678&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;01234567&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00123456&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00012345&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00001234&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00000123&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00000012&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; 
+&lt;span class="mi"&gt;00000001&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;最后i上的每一位k是原数与其左边所有位"|"的结果，也就是说最高位如果为1，那它后面的位都为1，i - (i &amp;gt;&amp;gt;&amp;gt; 1)，就是把除最高位1之后的其他位减掉。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(;;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;52429&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="c1"&gt;//2^19=524288&lt;/span&gt;
+            &lt;span class="c1"&gt;//52429/524288=0.1000003814697&lt;/span&gt;
+            &lt;span class="c1"&gt;//q=i*0.1&lt;/span&gt;
+            &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;  
+            &lt;span class="c1"&gt;// r = i-(q*10) ...&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中，&lt;a href="http://en.wikipedia.org/wiki/Division_algorithm#Newton.E2.80.93Raphson_division"&gt;除法&lt;/a&gt;有专门的算法研究。乘法可以用左移二进制的表示法来提高性能。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;numberOfTrailingZeros&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// HD, Figure 5-14&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;末尾有多少个0？我本来内心有一个很普通的实现，但是一看到这个实现，就觉得好喵啊～二分的思想，我这么没用起来了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;bitCount&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// HD, Figure 5-2&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x55555555&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x33333333&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x33333333&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x0f0f0f0f&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x3f&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可能下面的代码更加直观一点&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;bitCount&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; 
+&lt;span class="o"&gt;{&lt;/span&gt; 
+    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x55555555&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x55555555&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; 
+    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x33333333&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x33333333&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; 
+    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x0f0f0f0f&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x0f0f0f0f&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; 
+    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x00ff00ff&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x00ff00ff&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; 
+    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x0000ffff&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="o"&gt;)&amp;amp;&lt;/span&gt; &lt;span class="mh"&gt;0x0000ffff&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;        
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;;&lt;/span&gt; 
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也是通过二分的思想，将相邻1位，2位，4位，8位最后16位的1的个数加起来，最后的值就是答案。
+可惜的是，JVM虚拟机在碰到上面的方法时，并不会编译执行这些看似巧妙的方法，而是将这些方法直接用&lt;a href="http://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets"&gt;指令&lt;/a&gt;实现——&lt;a href="http://www.java-gaming.org/index.php?topic=27010.0"&gt;HotSpot Intrinsics&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="_2"&gt;二进制状态压缩&lt;/h3&gt;
+&lt;p&gt;之前遇到一个面试题，是说有1000瓶药，其中有1瓶是有毒的，用10只老鼠喝一次药来判断哪一瓶药是有毒的。之前没有接触过状态压缩，老鼠的生和死用二进制来标识就是2^10=1024种状态，把10只老鼠看成一个10bit的数，我想这就是一种状态压缩吧。搜到一个高中生的&lt;a href="http://www.cppblog.com/zyn1996/archive/2011/12/04/161415.aspx"&gt;博客&lt;/a&gt;，我还是好好的写点业务代码吧～洗洗睡。&lt;/p&gt;</summary><category term="JDK Source"></category><category term="Algorithm"></category></entry><entry><title>Intellij Idea Shortcuts</title><link href="http://xubin0523.github.io/intellij-idea-shortcuts.html" rel="alternate"></link><updated>2014-10-04T12:16:32+08:00</updated><author><name>Mark</name></author><id>tag:xubin0523.github.io,2014-10-04:intellij-idea-shortcuts.html</id><summary type="html">&lt;h3 id="_1"&gt;查找&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日常查看代码的需求都能符合 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Command + Shift + A   打开action，这里可以查看所有的快捷键&lt;/li&gt;
+&lt;li&gt;Command + O 打开class&lt;/li&gt;
+&lt;li&gt;Command + Shift + O 打开file&lt;/li&gt;
+&lt;li&gt;Command + F 本文件搜索&lt;/li&gt;
+&lt;li&gt;Command + Shift + F 全局搜索&lt;/li&gt;
+&lt;li&gt;Command + [ 上一个光标停留位置&lt;/li&gt;
+&lt;li&gt;Command + ] 下一个光标停留位置&lt;/li&gt;
+&lt;li&gt;Command + F7  Find Usages in Files&lt;/li&gt;
+&lt;li&gt;Option  + F7  Find Usages&lt;/li&gt;
+&lt;li&gt;Command + B   go to Declaration &lt;/li&gt;
+&lt;li&gt;Command + Option + B go to implements&lt;/li&gt;
+&lt;li&gt;Ctrl + H 类结构&lt;/li&gt;
+&lt;li&gt;Ctrl + J 查看javadoc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_2"&gt;编辑&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;日常写代码都能符合，跟很多编辑器的快捷键类似，比如shell&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Ctrl + A 行首&lt;/li&gt;
+&lt;li&gt;Ctrl + E，行尾&lt;/li&gt;
+&lt;li&gt;Ctrl + N  next line&lt;/li&gt;
+&lt;li&gt;Ctrl + P  previews line&lt;/li&gt;
+&lt;li&gt;Ctrl + F，forward,after char&lt;/li&gt;
+&lt;li&gt;Ctrl + B，before char&lt;/li&gt;
+&lt;li&gt;Ctrl + K 删除光标到行尾&lt;/li&gt;
+&lt;li&gt;Command + Shift + Delete 上一次编辑的位置&lt;/li&gt;
+&lt;li&gt;Command + N 可以创建构造函数、get、set方法&lt;/li&gt;
+&lt;li&gt;Command + shift + option + u 画类图&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Intellij"></category></entry></feed>
